@@ -31,51 +31,49 @@
         .header {
             background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             color: white;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 8px;
             font-weight: 700;
         }
 
         .header p {
             opacity: 0.9;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .main-content {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 0;
+            display: flex;
+            flex-direction: column;
             min-height: 600px;
         }
 
         .input-section {
-            padding: 30px;
+            padding: 20px;
             background: #f8fafc;
-            border-right: 1px solid #e2e8f0;
-            max-height: 700px;
-            overflow-y: auto;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .results-section {
             background: white;
+            flex: 1;
             display: flex;
             flex-direction: column;
         }
 
         .section-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #1e293b;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 600;
         }
 
         .gender-selection {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .gender-buttons {
@@ -85,10 +83,10 @@
 
         .gender-btn {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border: 2px solid #e2e8f0;
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
@@ -101,37 +99,50 @@
             border-color: #4f46e5;
         }
 
-        .planet-input {
+        .planets-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
-            gap: 8px;
-            align-items: center;
-            margin-bottom: 12px;
-            padding: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .planet-input {
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
         }
 
         .planet-name {
             font-weight: 600;
             color: #374151;
-            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .planet-controls {
+            display: grid;
+            grid-template-columns: 1fr 80px;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         select, input[type="number"] {
-            padding: 6px 8px;
+            padding: 8px 10px;
             border: 1px solid #d1d5db;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 0.9rem;
             font-family: inherit;
+            width: 100%;
         }
 
         .retrograde-checkbox {
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 0.75rem;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #6b7280;
         }
 
         .calculate-btn {
@@ -144,7 +155,6 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
             transition: transform 0.2s;
         }
 
@@ -173,17 +183,18 @@
         }
 
         .tab-button {
-            padding: 15px 20px;
+            padding: 12px 16px;
             border: none;
             background: none;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             color: #64748b;
             white-space: nowrap;
             transition: all 0.3s;
             border-bottom: 3px solid transparent;
             font-family: inherit;
+            min-width: 120px;
         }
 
         .tab-button.active {
@@ -195,9 +206,9 @@
 
         .tab-content {
             flex: 1;
-            padding: 30px;
+            padding: 20px;
             overflow-y: auto;
-            max-height: 600px;
+            max-height: 500px;
         }
 
         .tab-pane {
@@ -213,33 +224,34 @@
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-left: 4px solid #0ea5e9;
         }
 
         .prediction-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #0f172a;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .prediction-content {
             color: #475569;
             line-height: 1.7;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .percentage-indicator {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 4px 10px;
+            border-radius: 15px;
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-left: 10px;
+            font-size: 0.8rem;
+            margin-left: 8px;
         }
 
         .excellent {
@@ -260,32 +272,32 @@
         /* Complete Matrix Tab */
         .matrix-controls {
             display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
         }
 
         .search-box {
             flex: 1;
             min-width: 200px;
-            padding: 10px 15px;
+            padding: 8px 12px;
             border: 1px solid #d1d5db;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 0.9rem;
         }
 
         .filter-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .filter-btn {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border: 2px solid #e2e8f0;
             background: white;
-            border-radius: 20px;
+            border-radius: 15px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: all 0.3s;
         }
 
@@ -297,16 +309,16 @@
 
         .matrix-summary {
             background: #f8fafc;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
             border-left: 4px solid #4f46e5;
         }
 
         .summary-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
         }
 
         .stat-item {
@@ -314,13 +326,13 @@
         }
 
         .stat-number {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: #1e293b;
         }
 
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #64748b;
         }
 
@@ -331,12 +343,12 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .analysis-table th,
         .analysis-table td {
-            padding: 12px 8px;
+            padding: 8px 6px;
             text-align: center;
             border-bottom: 1px solid #e2e8f0;
         }
@@ -345,9 +357,7 @@
             background: #f1f5f9;
             font-weight: 600;
             color: #374151;
-            position: sticky;
-            top: 0;
-            z-index: 1;
+            font-size: 0.75rem;
         }
 
         .analysis-table tr:hover {
@@ -356,15 +366,15 @@
 
         /* Individual Analysis Tab */
         .planet-accordion {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             border: 1px solid #e2e8f0;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             background: white;
         }
 
         .planet-header {
-            padding: 20px;
+            padding: 15px;
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             cursor: pointer;
             display: flex;
@@ -378,13 +388,13 @@
         }
 
         .planet-header h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #1e293b;
             margin: 0;
         }
 
         .expand-icon {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #64748b;
             transition: transform 0.3s;
         }
@@ -395,7 +405,7 @@
 
         .planet-details {
             display: none;
-            padding: 20px;
+            padding: 15px;
             border-top: 1px solid #e2e8f0;
         }
 
@@ -405,15 +415,15 @@
 
         .relationship-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
         }
 
         .relationship-item {
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 4px solid;
-            font-size: 0.9rem;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid;
+            font-size: 0.85rem;
         }
 
         .relationship-item.good {
@@ -434,36 +444,36 @@
         /* Remedies Tab */
         .remedy-section {
             background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
             border-left: 4px solid #f59e0b;
         }
 
         .remedy-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: #92400e;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .remedy-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
         }
 
         .remedy-category {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 8px;
+            padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .remedy-category h4 {
             color: #1e293b;
-            margin-bottom: 15px;
-            font-size: 1rem;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
         }
 
         .remedy-list {
@@ -472,28 +482,29 @@
         }
 
         .remedy-list li {
-            padding: 8px 0;
+            padding: 6px 0;
             color: #374151;
             position: relative;
-            padding-left: 25px;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            padding-left: 20px;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
 
         .remedy-list li:before {
             content: "🔮";
             position: absolute;
             left: 0;
+            font-size: 0.8rem;
         }
 
         /* Yoga Indicators */
         .yoga-indicator {
             display: inline-block;
-            padding: 3px 8px;
-            border-radius: 15px;
-            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-left: 5px;
+            margin-left: 3px;
         }
 
         .parivartana-yoga {
@@ -515,19 +526,19 @@
         .loading {
             text-align: center;
             color: #6b7280;
-            padding: 60px 20px;
-            font-size: 1.1rem;
+            padding: 40px 20px;
+            font-size: 1rem;
         }
 
         .loading-spinner {
             display: inline-block;
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             border: 3px solid #e2e8f0;
             border-radius: 50%;
             border-top-color: #4f46e5;
             animation: spin 1s ease-in-out infinite;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         @keyframes spin {
@@ -536,61 +547,74 @@
 
         .calculation-breakdown {
             background: #f8fafc;
-            border-radius: 8px;
-            padding: 12px;
-            margin: 10px 0;
-            font-size: 0.85rem;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 8px 0;
+            font-size: 0.8rem;
             border-left: 3px solid #4f46e5;
         }
 
         .combination-strength {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-
-            .input-section {
-                border-right: none;
-                border-bottom: 1px solid #e2e8f0;
-                max-height: none;
-            }
-
-            .planet-input {
-                grid-template-columns: 1fr;
-                gap: 8px;
-                text-align: center;
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
-            }
-
             .container {
                 margin: 5px;
                 border-radius: 15px;
             }
 
+            .header {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.4rem;
+            }
+
+            .header p {
+                font-size: 0.8rem;
+            }
+
+            .input-section {
+                padding: 15px;
+            }
+
+            .planets-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .planet-input {
+                padding: 12px;
+            }
+
+            .planet-controls {
+                grid-template-columns: 1fr 70px;
+                gap: 8px;
+            }
+
             .tab-content {
-                padding: 20px 15px;
-                max-height: 500px;
+                padding: 15px;
+                max-height: 400px;
             }
 
             .tab-button {
-                padding: 12px 15px;
+                padding: 10px 12px;
                 font-size: 0.8rem;
+                min-width: 100px;
             }
 
             .matrix-controls {
                 flex-direction: column;
+                gap: 8px;
             }
 
             .filter-buttons {
                 justify-content: center;
+                flex-wrap: wrap;
             }
 
             .summary-stats {
@@ -602,6 +626,70 @@
             }
 
             .remedy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analysis-table {
+                font-size: 0.7rem;
+            }
+
+            .analysis-table th,
+            .analysis-table td {
+                padding: 6px 4px;
+            }
+
+            .prediction-title {
+                font-size: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .percentage-indicator {
+                margin-left: 0;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 1rem;
+            }
+
+            .planet-name {
+                font-size: 0.9rem;
+            }
+
+            .tab-button {
+                font-size: 0.75rem;
+                padding: 8px 10px;
+                min-width: 80px;
+            }
+
+            .analysis-table {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* Desktop specific improvements */
+        @media (min-width: 769px) {
+            .main-content {
+                flex-direction: row;
+            }
+
+            .input-section {
+                width: 380px;
+                border-right: 1px solid #e2e8f0;
+                border-bottom: none;
+                max-height: 600px;
+                overflow-y: auto;
+            }
+
+            .planets-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -637,6 +725,19 @@
         .tab-content::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+
+        .input-section::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .input-section::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .input-section::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
@@ -651,14 +752,14 @@
                 <h2 class="section-title">கிரக நிலைகளை உள்ளிடவும்</h2>
 
                 <div class="gender-selection">
-                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">பாலினம் தேர்வு செய்யவும்:</label>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem;">பாலினம் தேர்வு செய்யவும்:</label>
                     <div class="gender-buttons">
                         <button class="gender-btn active" data-gender="male">👨 ஆண்</button>
                         <button class="gender-btn" data-gender="female">👩 பெண்</button>
                     </div>
                 </div>
 
-                <div id="planet-inputs">
+                <div class="planets-grid" id="planet-inputs">
                     <!-- Planet inputs will be generated by JavaScript -->
                 </div>
 
@@ -816,11 +917,13 @@
 
                 planetDiv.innerHTML = `
                     <div class="planet-name">${planet.tamil}</div>
-                    <select id="${planet.english.toLowerCase()}-sign">
-                        <option value="">ராசி தேர்வு</option>
-                        ${signs.map((sign, index) => `<option value="${index + 1}">${sign}</option>`).join('')}
-                    </select>
-                    <input type="number" id="${planet.english.toLowerCase()}-degree" placeholder="டிகிரி" min="0" max="30" step="0.1">
+                    <div class="planet-controls">
+                        <select id="${planet.english.toLowerCase()}-sign">
+                            <option value="">ராசி தேர்வு</option>
+                            ${signs.map((sign, index) => `<option value="${index + 1}">${sign}</option>`).join('')}
+                        </select>
+                        <input type="number" id="${planet.english.toLowerCase()}-degree" placeholder="டிகிரி" min="0" max="30" step="0.1">
+                    </div>
                     <div class="retrograde-checkbox">
                         <input type="checkbox" id="${planet.english.toLowerCase()}-retro">
                         <label for="${planet.english.toLowerCase()}-retro">வக்ரம்</label>
@@ -861,18 +964,36 @@
             return planetData;
         }
 
-        function calculateDistance(from, to) {
-            let distance = to - from;
-            if (distance <= 0) distance += 12;
-            return distance;
+        // CORRECTED BNN Distance Calculation - TRUE INCLUSIVE COUNTING
+        function calculateHouseDistance(fromHouse, toHouse) {
+            // True inclusive counting: count houses including starting house
+            let count = 0;
+            let current = fromHouse;
+
+            do {
+                count++;
+                if (current === toHouse) break;
+                current++;
+                if (current > 12) current = 1; // Wrap around
+            } while (count <= 12);
+
+            return count; // This gives the true "Xth house from" relationship
         }
 
+        // Updated BNN Good/Bad House Positions (Corrected)
         function isGoodPosition(distance) {
-            return [1, 2, 3, 5, 7, 9, 11, 12].includes(distance);
+            // 🟢 Beneficial Positions (Add +20 points)
+            return [2, 3, 5, 7, 9, 11].includes(distance);
         }
 
         function isBadPosition(distance) {
-            return [4, 6, 8, 10].includes(distance);
+            // 🔴 Challenging Positions (Subtract -30 points)
+            return [6, 8, 12].includes(distance);
+        }
+
+        function isNeutralPosition(distance) {
+            // 🟡 Neutral Positions (No change)
+            return [1, 4, 10].includes(distance);
         }
 
         function checkConjunction(planet1, planet2, planetData) {
@@ -907,6 +1028,7 @@
             }
         }
 
+        // CORRECTED Percentage Calculation using proper distance method
         function calculatePercentage(planet1, planet2, planetData) {
             let baseScore = 50; // Neutral base
 
@@ -915,11 +1037,16 @@
             if (friendship === 'நண்பு') baseScore += 25;
             else if (friendship === 'பகை') baseScore -= 25;
 
-            // House position bonus/penalty
+            // House position bonus/penalty using CORRECTED distance calculation
             if (planetData[planet1] && planetData[planet2]) {
-                const distance = calculateDistance(planetData[planet1].sign, planetData[planet2].sign);
-                if (isGoodPosition(distance)) baseScore += 20;
-                else if (isBadPosition(distance)) baseScore -= 30;
+                const distance = calculateHouseDistance(planetData[planet1].sign, planetData[planet2].sign);
+
+                if (isGoodPosition(distance)) {
+                    baseScore += 20;
+                } else if (isBadPosition(distance)) {
+                    baseScore -= 30;
+                }
+                // Neutral positions: no change
             }
 
             // Special yogas
@@ -948,7 +1075,8 @@
                     const planet1 = planetNames[i];
                     const planet2 = planetNames[j];
 
-                    const distance = calculateDistance(planetData[planet1].sign, planetData[planet2].sign);
+                    // Using CORRECTED distance calculation
+                    const distance = calculateHouseDistance(planetData[planet1].sign, planetData[planet2].sign);
                     const friendship = getFriendshipStatus(planet1, planet2);
                     const percentage = calculatePercentage(planet1, planet2, planetData);
                     const conjunction = checkConjunction(planet1, planet2, planetData);
@@ -1054,7 +1182,8 @@
 
                 planetNames.forEach(otherPlanet => {
                     if (planet !== otherPlanet) {
-                        const distance = calculateDistance(planetData[planet].sign, planetData[otherPlanet].sign);
+                        // Using CORRECTED distance calculation
+                        const distance = calculateHouseDistance(planetData[planet].sign, planetData[otherPlanet].sign);
                         const percentage = calculatePercentage(planet, otherPlanet, planetData);
                         const friendship = getFriendshipStatus(planet, otherPlanet);
                         const isGood = isGoodPosition(distance);
@@ -1073,7 +1202,7 @@
 
                         if (isGood) {
                             goodRelationships.push(relationshipData);
-                        } else {
+                        } else if (isBadPosition(distance)) {
                             badRelationships.push(relationshipData);
                         }
                     }
@@ -1089,7 +1218,7 @@
                             <span class="expand-icon">▼</span>
                         </div>
                         <div class="planet-details" id="${planet}-details">
-                            <div style="margin-bottom: 20px;">
+                            <div style="margin-bottom: 15px;">
                                 <p><strong>🟢 நல்ல உறவுகள் (${goodRelationships.length}):</strong> 
                                 ${goodRelationships.map(r => tamilNames[r.planet]).join(', ') || 'இல்லை'}</p>
                                 <p><strong>🔴 சவாலான உறவுகள் (${badRelationships.length}):</strong> 
@@ -1097,7 +1226,7 @@
                             </div>
                             <div class="relationship-grid">
                                 ${relationships.map(rel => `
-                                    <div class="relationship-item ${rel.isGood ? 'good' : 'bad'}">
+                                    <div class="relationship-item ${rel.isGood ? 'good' : isBadPosition(rel.distance) ? 'bad' : 'neutral'}">
                                         <strong>${tamilNames[rel.planet]}</strong>: ${rel.distance}வது வீடு<br>
                                         ${rel.friendship} உறவு - ${rel.percentage}%
                                     </div>
@@ -1236,7 +1365,7 @@
             });
         }
 
-        // Main prediction functions (keeping existing logic)
+        // Main prediction functions using CORRECTED distance calculation
         function getMarriagePrediction(planetData) {
             let prediction = '';
             let remedies = [];
@@ -1245,12 +1374,14 @@
             if (selectedGender === 'male') {
                 if (planetData.Jupiter && planetData.Venus) {
                     percentage = calculatePercentage('Jupiter', 'Venus', planetData);
-                    const distance = calculateDistance(planetData.Jupiter.sign, planetData.Venus.sign);
+                    // Using CORRECTED distance calculation
+                    const distance = calculateHouseDistance(planetData.Jupiter.sign, planetData.Venus.sign);
 
                     prediction = `<div class="calculation-breakdown">
-                        <div class="combination-strength">குரு-சுக்கிரன் கணக்கீடு:</div>
+                        <div class="combination-strength">குரு-சுக்கிரன் கணக்கீடு (CORRECTED):</div>
                         <div>• நட்பு உறவு: ${getFriendshipStatus('Jupiter', 'Venus')}</div>
-                        <div>• வீட்டு இடைவெளி: ${distance}வது இடம்</div>
+                        <div>• வீட்டு இடைவெளி: ${distance}வது இடம் (குருவிலிருந்து சுக்கிரன்)</div>
+                        <div>• நிலை மதிப்பீடு: ${isGoodPosition(distance) ? 'நல்லது ✓' : isBadPosition(distance) ? 'சவாலானது ⚠️' : 'நடுநிலை ○'}</div>
                         <div>• சிறப்பு யோகங்கள்: ${checkParivartana('Jupiter', 'Venus', planetData) ? 'பரிவர்தனம் ✓' : ''} ${checkConjunction('Jupiter', 'Venus', planetData) ? 'சேர்க்கை ✓' : ''}</div>
                     </div>`;
 
@@ -1274,12 +1405,14 @@
                 // Female predictions
                 if (planetData.Venus && planetData.Mars) {
                     percentage = calculatePercentage('Venus', 'Mars', planetData);
-                    const distance = calculateDistance(planetData.Venus.sign, planetData.Mars.sign);
+                    // Using CORRECTED distance calculation
+                    const distance = calculateHouseDistance(planetData.Venus.sign, planetData.Mars.sign);
 
                     prediction = `<div class="calculation-breakdown">
-                        <div class="combination-strength">சுக்கிரன்-செவ்வாய் கணக்கீடு:</div>
+                        <div class="combination-strength">சுக்கிரன்-செவ்வாய் கணக்கீடு (CORRECTED):</div>
                         <div>• நட்பு உறவு: ${getFriendshipStatus('Venus', 'Mars')}</div>
-                        <div>• வீட்டு இடைவெளி: ${distance}வது இடம்</div>
+                        <div>• வீட்டு இடைவெளி: ${distance}வது இடம் (சுக்கிரனிலிருந்து செவ்வாய்)</div>
+                        <div>• நிலை மதிப்பீடு: ${isGoodPosition(distance) ? 'நல்லது ✓' : isBadPosition(distance) ? 'சவாலானது ⚠️' : 'நடுநிலை ○'}</div>
                         <div>• சிறப்பு யோகங்கள்: ${checkParivartana('Venus', 'Mars', planetData) ? 'பரிவர்தனம் ✓' : ''} ${checkConjunction('Venus', 'Mars', planetData) ? 'சேர்க்கை ✓' : ''}</div>
                     </div>`;
 
@@ -1348,8 +1481,8 @@
                     prediction += `📖 புதன் தனித்து: பொதுக் கல்வி, தொடர்பு சார்ந்த துறைகள்<br>`;
                 }
 
-                // Education obstacles
-                if (planetData.Saturn && isBadPosition(calculateDistance(planetData.Mercury.sign, planetData.Saturn.sign))) {
+                // Education obstacles using CORRECTED distance calculation
+                if (planetData.Saturn && isBadPosition(calculateHouseDistance(planetData.Mercury.sign, planetData.Saturn.sign))) {
                     prediction += `⚠️ சனியின் மோசமான பார்வை கல்வியில் தாமதம் அல்லது தடைகளை ஏற்படுத்தலாம்.<br>`;
                     percentage -= 20;
                     remedies.push('காலை நேரத்தில் படிக்கவும்');
@@ -1429,7 +1562,8 @@
                 }
 
                 if (planetData.Ketu) {
-                    const distance = calculateDistance(planetData.Jupiter.sign, planetData.Ketu.sign);
+                    // Using CORRECTED distance calculation
+                    const distance = calculateHouseDistance(planetData.Jupiter.sign, planetData.Ketu.sign);
                     if (distance === 7) {
                         prediction += `🎯 குரு-கேது எதிர் நிலை: ஆன்மீக குழந்தைகள், சிறப்பு திறமைகள்.<br>`;
                         percentage += 15;
@@ -1441,7 +1575,8 @@
                     percentage += 20;
                 }
 
-                if (planetData.Saturn && isBadPosition(calculateDistance(planetData.Jupiter.sign, planetData.Saturn.sign))) {
+                // Using CORRECTED distance calculation
+                if (planetData.Saturn && isBadPosition(calculateHouseDistance(planetData.Jupiter.sign, planetData.Saturn.sign))) {
                     prediction += `⚠️ சனியின் பாதிப்பு சந்தான பேற்றில் தாமதத்தை ஏற்படுத்தலாம்.<br>`;
                     percentage -= 15;
                     remedies.push('வியாழக்கிழமை கோவில் செல்லவும்');
@@ -1543,6 +1678,39 @@
             const remediesHTML = generateComprehensiveRemedies(planetData, marriageResult, educationResult, careerResult, childrenResult);
             document.getElementById('remedies-content').innerHTML = remediesHTML;
         }
+
+        // Test the corrected calculation method
+        function testBNNCalculation() {
+            console.log("🧪 Testing CORRECTED BNN Distance Calculation Method:");
+
+            // Test Case 1: Planet A in House 1, Planet B in House 4
+            const test1 = calculateHouseDistance(1, 4);
+            console.log(`Test 1 - House 1 to House 4: ${test1}வது (Expected: 4வது) - ${test1 === 4 ? '✅ PASS' : '❌ FAIL'}`);
+
+            // Test Case 2: Planet A in House 1, Planet B in House 6 
+            const test2 = calculateHouseDistance(1, 6);
+            console.log(`Test 2 - House 1 to House 6: ${test2}வது (Expected: 6வது) - ${test2 === 6 ? '✅ PASS' : '❌ FAIL'}`);
+
+            // Test Case 3: Planet A in House 10, Planet B in House 1 (wrap-around)
+            const test3 = calculateHouseDistance(10, 1);
+            console.log(`Test 3 - House 10 to House 1: ${test3}வது (Expected: 4வது) - ${test3 === 4 ? '✅ PASS' : '❌ FAIL'}`);
+
+            // Test Case 4: Same house
+            const test4 = calculateHouseDistance(5, 5);
+            console.log(`Test 4 - House 5 to House 5: ${test4}வது (Expected: 1வது) - ${test4 === 1 ? '✅ PASS' : '❌ FAIL'}`);
+
+            // Test positions with corrected method
+            console.log(`\n🎯 Corrected Position Classifications:`);
+            console.log(`4th house: ${isGoodPosition(4) ? 'Good ✅' : isNeutralPosition(4) ? 'Neutral ○' : 'Bad ❌'} (Expected: Neutral)`);
+            console.log(`6th house: ${isBadPosition(6) ? 'Bad ✅' : 'Not Bad ❌'} (Expected: Bad)`);
+            console.log(`5th house: ${isGoodPosition(5) ? 'Good ✅' : 'Not Good ❌'} (Expected: Good)`);
+        }
+
+        // Run test on page load (for debugging)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Uncomment the line below to run tests in console
+            testBNNCalculation();
+        });
     </script>
 </body>
 </html>
