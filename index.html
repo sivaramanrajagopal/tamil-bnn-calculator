@@ -1,16 +1,1548 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ta">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>பிருகு நந்தி நாடி கணிப்பு கருவி - முழுமையான பதிப்பு</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Tamil', 'Tamil Sangam MN', 'Arial Unicode MS', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .input-section {
+            padding: 30px;
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+            max-height: 700px;
+            overflow-y: auto;
+        }
+
+        .results-section {
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .gender-selection {
+            margin-bottom: 25px;
+        }
+
+        .gender-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .gender-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .gender-btn.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .planet-input {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .planet-name {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        select, input[type="number"] {
+            padding: 6px 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: inherit;
+        }
+
+        .retrograde-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Tab System */
+        .tab-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-buttons {
+            display: flex;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tab-buttons::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-button {
+            padding: 15px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #64748b;
+            white-space: nowrap;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            font-family: inherit;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #4f46e5;
+            border-bottom-color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 600px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Main Predictions Tab */
+        .prediction-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .prediction-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prediction-content {
+            color: #475569;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .percentage-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
+
+        .excellent {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .good {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .average {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        /* Complete Matrix Tab */
+        .matrix-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .matrix-summary {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .analysis-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 0.85rem;
+        }
+
+        .analysis-table th,
+        .analysis-table td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .analysis-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #374151;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .analysis-table tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Individual Analysis Tab */
+        .planet-accordion {
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .planet-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .planet-header:hover {
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+        }
+
+        .planet-header h3 {
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            color: #64748b;
+            transition: transform 0.3s;
+        }
+
+        .planet-header.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .planet-details {
+            display: none;
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .planet-details.show {
+            display: block;
+        }
+
+        .relationship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .relationship-item {
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            font-size: 0.9rem;
+        }
+
+        .relationship-item.good {
+            background: #f0fdf4;
+            border-left-color: #22c55e;
+        }
+
+        .relationship-item.bad {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+        }
+
+        .relationship-item.neutral {
+            background: #f8fafc;
+            border-left-color: #64748b;
+        }
+
+        /* Remedies Tab */
+        .remedy-section {
+            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .remedy-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+
+        .remedy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .remedy-category {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .remedy-category h4 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .remedy-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .remedy-list li {
+            padding: 8px 0;
+            color: #374151;
+            position: relative;
+            padding-left: 25px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .remedy-list li:before {
+            content: "🔮";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Yoga Indicators */
+        .yoga-indicator {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .parivartana-yoga {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .conjunction-yoga {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .retrograde-yoga {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            color: #6b7280;
+            padding: 60px 20px;
+            font-size: 1.1rem;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #e2e8f0;
+            border-radius: 50%;
+            border-top-color: #4f46e5;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .calculation-breakdown {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 0.85rem;
+            border-left: 3px solid #4f46e5;
+        }
+
+        .combination-strength {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .input-section {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                max-height: none;
+            }
+
+            .planet-input {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                margin: 5px;
+                border-radius: 15px;
+            }
+
+            .tab-content {
+                padding: 20px 15px;
+                max-height: 500px;
+            }
+
+            .tab-button {
+                padding: 12px 15px;
+                font-size: 0.8rem;
+            }
+
+            .matrix-controls {
+                flex-direction: column;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+
+            .summary-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .relationship-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .remedy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Enhanced Visual Effects */
+        .tab-button:hover {
+            background: #f8fafc;
+            color: #4f46e5;
+        }
+
+        .planet-accordion:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .analysis-table tbody tr {
+            transition: all 0.2s;
+        }
+
+        /* Scrollbar Styling */
+        .tab-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .tab-content::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        .tab-content::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .tab-content::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
 </head>
-
 <body>
-  Hello world
-  <script src="script.js"></script>
-</body>
+    <div class="container">
+        <div class="header">
+            <h1>🔮 பிருகு நந்தி நாடி கணிப்பு கருவி</h1>
+            <p>5000 ஆண்டுகள் பழமையான முழுமையான தென்னிந்திய கணிப்பு ஜோதிடம்</p>
+        </div>
 
+        <div class="main-content">
+            <div class="input-section">
+                <h2 class="section-title">கிரக நிலைகளை உள்ளிடவும்</h2>
+
+                <div class="gender-selection">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">பாலினம் தேர்வு செய்யவும்:</label>
+                    <div class="gender-buttons">
+                        <button class="gender-btn active" data-gender="male">👨 ஆண்</button>
+                        <button class="gender-btn" data-gender="female">👩 பெண்</button>
+                    </div>
+                </div>
+
+                <div id="planet-inputs">
+                    <!-- Planet inputs will be generated by JavaScript -->
+                </div>
+
+                <button class="calculate-btn" onclick="calculateBNN()">🚀 முழுமையான கணிப்புகளை காண்க</button>
+            </div>
+
+            <div class="results-section">
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" onclick="showTab('main')">முக்கிய கணிப்புகள்</button>
+                        <button class="tab-button" onclick="showTab('matrix')">முழு கிரக கலவைகள்</button>
+                        <button class="tab-button" onclick="showTab('individual')">தனிப்பட்ட பகுப்பாய்வு</button>
+                        <button class="tab-button" onclick="showTab('remedies')">பரிகாரங்கள்</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <!-- Main Predictions Tab -->
+                        <div id="main-tab" class="tab-pane active">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                                <p>👆 கிரக நிலைகளை உள்ளிட்டு கணிப்பு பொத்தானை அழுத்தவும்</p>
+                            </div>
+                        </div>
+
+                        <!-- Complete Matrix Tab -->
+                        <div id="matrix-tab" class="tab-pane">
+                            <div class="matrix-controls">
+                                <input type="text" class="search-box" placeholder="கிரக பெயரை தேடவும்..." onkeyup="filterMatrix(this.value)">
+                                <div class="filter-buttons">
+                                    <button class="filter-btn active" onclick="filterByStatus('all')">அனைத்தும்</button>
+                                    <button class="filter-btn" onclick="filterByStatus('excellent')">சிறந்த</button>
+                                    <button class="filter-btn" onclick="filterByStatus('good')">நல்ல</button>
+                                    <button class="filter-btn" onclick="filterByStatus('average')">சவால்</button>
+                                </div>
+                            </div>
+                            <div id="matrix-content">
+                                <div class="loading">
+                                    <p>கணிப்புகளைக் காண முதலில் கிரக நிலைகளை உள்ளிடவும்</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Individual Analysis Tab -->
+                        <div id="individual-tab" class="tab-pane">
+                            <div id="individual-content">
+                                <div class="loading">
+                                    <p>தனிப்பட்ட கிரக பகுப்பாய்வுக்கு முதலில் கணிப்புகளை உருவாக்கவும்</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Remedies Tab -->
+                        <div id="remedies-tab" class="tab-pane">
+                            <div id="remedies-content">
+                                <div class="loading">
+                                    <p>பரிகாரங்களைக் காண முதலில் கணிப்புகளை முடிக்கவும்</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let selectedGender = 'male';
+        let currentPlanetData = {};
+        let allCombinations = [];
+
+        // Tamil planet names
+        const planets = [
+            { english: 'Sun', tamil: 'சூரியன்' },
+            { english: 'Moon', tamil: 'சந்திரன்' },
+            { english: 'Mars', tamil: 'செவ்வாய்' },
+            { english: 'Mercury', tamil: 'புதன்' },
+            { english: 'Jupiter', tamil: 'குரு' },
+            { english: 'Venus', tamil: 'சுக்கிரன்' },
+            { english: 'Saturn', tamil: 'சனி' },
+            { english: 'Rahu', tamil: 'ராகு' },
+            { english: 'Ketu', tamil: 'கேது' }
+        ];
+
+        // Tamil zodiac signs
+        const signs = [
+            'மேஷம் (1)', 'ரிஷபம் (2)', 'மிதுனம் (3)', 'கடகம் (4)', 
+            'சிம்மம் (5)', 'கன்னி (6)', 'துலாம் (7)', 'விருச்சிகம் (8)', 
+            'தனுசு (9)', 'மகரம் (10)', 'கும்பம் (11)', 'மீனம் (12)'
+        ];
+
+        // House rulers mapping
+        const houseRulers = {
+            1: 'Mars', 2: 'Venus', 3: 'Mercury', 4: 'Moon',
+            5: 'Sun', 6: 'Mercury', 7: 'Venus', 8: 'Mars',
+            9: 'Jupiter', 10: 'Saturn', 11: 'Saturn', 12: 'Jupiter'
+        };
+
+        // Natural friendship table
+        const naturalFriends = {
+            'Sun': ['Moon', 'Mars', 'Jupiter'],
+            'Moon': ['Sun', 'Mercury'],
+            'Mars': ['Sun', 'Moon', 'Jupiter'],
+            'Mercury': ['Sun', 'Venus'],
+            'Jupiter': ['Sun', 'Moon', 'Mars'],
+            'Venus': ['Mercury', 'Saturn'],
+            'Saturn': ['Mercury', 'Venus'],
+            'Rahu': ['Jupiter', 'Venus', 'Saturn'],
+            'Ketu': ['Sun', 'Moon']
+        };
+
+        const naturalEnemies = {
+            'Sun': ['Venus', 'Saturn'],
+            'Moon': [],
+            'Mars': ['Mercury'],
+            'Mercury': ['Moon'],
+            'Jupiter': ['Mercury', 'Venus'],
+            'Venus': ['Sun', 'Moon'],
+            'Saturn': ['Sun', 'Moon', 'Mars'],
+            'Rahu': ['Sun', 'Moon', 'Mars'],
+            'Ketu': []
+        };
+
+        // Tamil translations
+        const tamilNames = {
+            'Sun': 'சூரியன்', 'Moon': 'சந்திரன்', 'Mars': 'செவ்வாய்',
+            'Mercury': 'புதன்', 'Jupiter': 'குரு', 'Venus': 'சுக்கிரன்',
+            'Saturn': 'சனி', 'Rahu': 'ராகு', 'Ketu': 'கேது'
+        };
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            generatePlanetInputs();
+            setupGenderSelection();
+        });
+
+        function setupGenderSelection() {
+            const genderButtons = document.querySelectorAll('.gender-btn');
+            genderButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    genderButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedGender = this.dataset.gender;
+                });
+            });
+        }
+
+        function generatePlanetInputs() {
+            const container = document.getElementById('planet-inputs');
+            container.innerHTML = '';
+
+            planets.forEach(planet => {
+                const planetDiv = document.createElement('div');
+                planetDiv.className = 'planet-input';
+
+                planetDiv.innerHTML = `
+                    <div class="planet-name">${planet.tamil}</div>
+                    <select id="${planet.english.toLowerCase()}-sign">
+                        <option value="">ராசி தேர்வு</option>
+                        ${signs.map((sign, index) => `<option value="${index + 1}">${sign}</option>`).join('')}
+                    </select>
+                    <input type="number" id="${planet.english.toLowerCase()}-degree" placeholder="டிகிரி" min="0" max="30" step="0.1">
+                    <div class="retrograde-checkbox">
+                        <input type="checkbox" id="${planet.english.toLowerCase()}-retro">
+                        <label for="${planet.english.toLowerCase()}-retro">வக்ரம்</label>
+                    </div>
+                `;
+
+                container.appendChild(planetDiv);
+            });
+        }
+
+        // Tab Management
+        function showTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        function getPlanetData() {
+            const planetData = {};
+            planets.forEach(planet => {
+                const sign = document.getElementById(`${planet.english.toLowerCase()}-sign`).value;
+                const degree = document.getElementById(`${planet.english.toLowerCase()}-degree`).value;
+                const retrograde = document.getElementById(`${planet.english.toLowerCase()}-retro`).checked;
+
+                if (sign) {
+                    planetData[planet.english] = {
+                        sign: parseInt(sign),
+                        degree: parseFloat(degree) || 0,
+                        retrograde: retrograde,
+                        tamil: planet.tamil
+                    };
+                }
+            });
+            return planetData;
+        }
+
+        function calculateDistance(from, to) {
+            let distance = to - from;
+            if (distance <= 0) distance += 12;
+            return distance;
+        }
+
+        function isGoodPosition(distance) {
+            return [1, 2, 3, 5, 7, 9, 11, 12].includes(distance);
+        }
+
+        function isBadPosition(distance) {
+            return [4, 6, 8, 10].includes(distance);
+        }
+
+        function checkConjunction(planet1, planet2, planetData) {
+            if (!planetData[planet1] || !planetData[planet2]) return false;
+
+            const p1 = planetData[planet1];
+            const p2 = planetData[planet2];
+
+            if (p1.sign === p2.sign) {
+                const degreeDiff = Math.abs(p1.degree - p2.degree);
+                return degreeDiff <= 8; // 8-degree orb
+            }
+            return false;
+        }
+
+        function checkParivartana(planet1, planet2, planetData) {
+            if (!planetData[planet1] || !planetData[planet2]) return false;
+
+            const ruler1 = houseRulers[planetData[planet1].sign];
+            const ruler2 = houseRulers[planetData[planet2].sign];
+
+            return (ruler1 === planet2 && ruler2 === planet1);
+        }
+
+        function getFriendshipStatus(planet1, planet2) {
+            if (naturalFriends[planet1] && naturalFriends[planet1].includes(planet2)) {
+                return 'நண்பு';
+            } else if (naturalEnemies[planet1] && naturalEnemies[planet1].includes(planet2)) {
+                return 'பகை';
+            } else {
+                return 'நடுநிலை';
+            }
+        }
+
+        function calculatePercentage(planet1, planet2, planetData) {
+            let baseScore = 50; // Neutral base
+
+            // Friendship bonus/penalty
+            const friendship = getFriendshipStatus(planet1, planet2);
+            if (friendship === 'நண்பு') baseScore += 25;
+            else if (friendship === 'பகை') baseScore -= 25;
+
+            // House position bonus/penalty
+            if (planetData[planet1] && planetData[planet2]) {
+                const distance = calculateDistance(planetData[planet1].sign, planetData[planet2].sign);
+                if (isGoodPosition(distance)) baseScore += 20;
+                else if (isBadPosition(distance)) baseScore -= 30;
+            }
+
+            // Special yogas
+            if (checkConjunction(planet1, planet2, planetData)) baseScore += 10;
+            if (checkParivartana(planet1, planet2, planetData)) baseScore += 20;
+
+            // Retrograde bonus
+            if (planetData[planet1] && planetData[planet1].retrograde) baseScore += 15;
+            if (planetData[planet2] && planetData[planet2].retrograde) baseScore += 15;
+
+            return Math.min(Math.max(baseScore, 0), 100);
+        }
+
+        function getPercentageClass(percentage) {
+            if (percentage >= 75) return 'excellent';
+            if (percentage >= 50) return 'good';
+            return 'average';
+        }
+
+        function generateAllCombinations(planetData) {
+            const planetNames = Object.keys(planetData);
+            const combinations = [];
+
+            for (let i = 0; i < planetNames.length; i++) {
+                for (let j = i + 1; j < planetNames.length; j++) {
+                    const planet1 = planetNames[i];
+                    const planet2 = planetNames[j];
+
+                    const distance = calculateDistance(planetData[planet1].sign, planetData[planet2].sign);
+                    const friendship = getFriendshipStatus(planet1, planet2);
+                    const percentage = calculatePercentage(planet1, planet2, planetData);
+                    const conjunction = checkConjunction(planet1, planet2, planetData);
+                    const parivartana = checkParivartana(planet1, planet2, planetData);
+
+                    let yogas = [];
+                    if (conjunction) yogas.push('<span class="yoga-indicator conjunction-yoga">சேர்க்கை</span>');
+                    if (parivartana) yogas.push('<span class="yoga-indicator parivartana-yoga">பரிவர்தனம்</span>');
+                    if (planetData[planet1].retrograde) yogas.push('<span class="yoga-indicator retrograde-yoga">வக்ரம்₁</span>');
+                    if (planetData[planet2].retrograde) yogas.push('<span class="yoga-indicator retrograde-yoga">வக்ரம்₂</span>');
+
+                    const percentageClass = getPercentageClass(percentage);
+                    let status = percentage >= 75 ? '✅ மிகச்சிறந்த' : 
+                               percentage >= 50 ? '🟡 நல்ல' : '❌ சவால்';
+
+                    combinations.push({
+                        planet1, planet2, distance, friendship, percentage, 
+                        percentageClass, status, yogas: yogas.join(' '),
+                        searchText: `${tamilNames[planet1]} ${tamilNames[planet2]}`
+                    });
+                }
+            }
+
+            return combinations.sort((a, b) => b.percentage - a.percentage);
+        }
+
+        function generateMatrixSummary(combinations) {
+            const excellent = combinations.filter(c => c.percentage >= 75).length;
+            const good = combinations.filter(c => c.percentage >= 50 && c.percentage < 75).length;
+            const average = combinations.filter(c => c.percentage < 50).length;
+            const avgStrength = Math.round(combinations.reduce((sum, c) => sum + c.percentage, 0) / combinations.length);
+
+            return {
+                excellent, good, average, avgStrength, total: combinations.length
+            };
+        }
+
+        function generateCompleteMatrix(planetData) {
+            allCombinations = generateAllCombinations(planetData);
+            const summary = generateMatrixSummary(allCombinations);
+
+            let html = `
+                <div class="matrix-summary">
+                    <h3 style="margin-bottom: 15px;">கிரக கலவை சுருக்கம்</h3>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: #059669;">${summary.excellent}</div>
+                            <div class="stat-label">மிகச்சிறந்த கலவைகள்</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: #d97706;">${summary.good}</div>
+                            <div class="stat-label">நல்ல கலவைகள்</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: #dc2626;">${summary.average}</div>
+                            <div class="stat-label">சவாலான கலவைகள்</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: #4f46e5;">${summary.avgStrength}%</div>
+                            <div class="stat-label">சராசரி வலிமை</div>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="analysis-table" id="combinations-table">
+                    <thead>
+                        <tr>
+                            <th>கிரக ஜோடி</th>
+                            <th>தூரம்</th>
+                            <th>நட்பு/பகை</th>
+                            <th>சதவீதம்</th>
+                            <th>யோகங்கள்</th>
+                            <th>நிலை</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${allCombinations.map(combo => `
+                            <tr data-status="${combo.percentageClass}" data-search="${combo.searchText}">
+                                <td>${tamilNames[combo.planet1]} - ${tamilNames[combo.planet2]}</td>
+                                <td>${combo.distance}வது</td>
+                                <td>${combo.friendship}</td>
+                                <td><span class="percentage-indicator ${combo.percentageClass}">${combo.percentage}%</span></td>
+                                <td>${combo.yogas}</td>
+                                <td>${combo.status}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            return html;
+        }
+
+        function generateIndividualAnalysis(planetData) {
+            const planetNames = Object.keys(planetData);
+            let html = '';
+
+            planetNames.forEach(planet => {
+                const relationships = [];
+                const goodRelationships = [];
+                const badRelationships = [];
+                let totalStrength = 0;
+
+                planetNames.forEach(otherPlanet => {
+                    if (planet !== otherPlanet) {
+                        const distance = calculateDistance(planetData[planet].sign, planetData[otherPlanet].sign);
+                        const percentage = calculatePercentage(planet, otherPlanet, planetData);
+                        const friendship = getFriendshipStatus(planet, otherPlanet);
+                        const isGood = isGoodPosition(distance);
+
+                        totalStrength += percentage;
+
+                        const relationshipData = {
+                            planet: otherPlanet,
+                            distance,
+                            percentage,
+                            friendship,
+                            isGood
+                        };
+
+                        relationships.push(relationshipData);
+
+                        if (isGood) {
+                            goodRelationships.push(relationshipData);
+                        } else {
+                            badRelationships.push(relationshipData);
+                        }
+                    }
+                });
+
+                const avgStrength = Math.round(totalStrength / relationships.length);
+                const strengthClass = getPercentageClass(avgStrength);
+
+                html += `
+                    <div class="planet-accordion">
+                        <div class="planet-header" onclick="togglePlanetDetails('${planet}')">
+                            <h3>${tamilNames[planet]} <span class="percentage-indicator ${strengthClass}">${avgStrength}%</span></h3>
+                            <span class="expand-icon">▼</span>
+                        </div>
+                        <div class="planet-details" id="${planet}-details">
+                            <div style="margin-bottom: 20px;">
+                                <p><strong>🟢 நல்ல உறவுகள் (${goodRelationships.length}):</strong> 
+                                ${goodRelationships.map(r => tamilNames[r.planet]).join(', ') || 'இல்லை'}</p>
+                                <p><strong>🔴 சவாலான உறவுகள் (${badRelationships.length}):</strong> 
+                                ${badRelationships.map(r => tamilNames[r.planet]).join(', ') || 'இல்லை'}</p>
+                            </div>
+                            <div class="relationship-grid">
+                                ${relationships.map(rel => `
+                                    <div class="relationship-item ${rel.isGood ? 'good' : 'bad'}">
+                                        <strong>${tamilNames[rel.planet]}</strong>: ${rel.distance}வது வீடு<br>
+                                        ${rel.friendship} உறவு - ${rel.percentage}%
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            return html;
+        }
+
+        function generateComprehensiveRemedies(planetData, marriageResult, educationResult, careerResult, childrenResult) {
+            const allRemedies = [
+                ...marriageResult.remedies, 
+                ...educationResult.remedies, 
+                ...careerResult.remedies, 
+                ...childrenResult.remedies
+            ];
+
+            // Planet-specific remedies based on weak combinations
+            const planetRemedies = {};
+            const combinations = generateAllCombinations(planetData);
+
+            combinations.forEach(combo => {
+                if (combo.percentage < 50) {
+                    if (!planetRemedies[combo.planet1]) planetRemedies[combo.planet1] = [];
+                    if (!planetRemedies[combo.planet2]) planetRemedies[combo.planet2] = [];
+
+                    planetRemedies[combo.planet1].push(`${tamilNames[combo.planet2]} உடனான உறவு மேம்படுத்த`);
+                    planetRemedies[combo.planet2].push(`${tamilNames[combo.planet1]} உடனான உறவு மேம்படுத்த`);
+                }
+            });
+
+            let html = `
+                <div class="remedy-grid">
+                    <div class="remedy-category">
+                        <h4>🏛️ கோவில் வழிபாடுகள்</h4>
+                        <ul class="remedy-list">
+                            <li>திங்கள்: சிவன் கோவில் - மனஅமைதிக்காக</li>
+                            <li>செவ்வாய்: ஹனுமான் கோவில் - சக்தி பெற</li>
+                            <li>புதன்: விஷ்ணு கோவில் - அறிவு வளர்ச்சிக்காக</li>
+                            <li>வியாழன்: குரு கோவில் - ஞானம் பெற</li>
+                            <li>வெள்ளி: லட்சுமி கோவில் - செல்வம் பெற</li>
+                            <li>சனி: சனீஸ்வரர் கோவில் - துன்பம் நீங்க</li>
+                            <li>ஞாயிறு: சூரியன் கோவில் - ஆரோக்யம் பெற</li>
+                        </ul>
+                    </div>
+
+                    <div class="remedy-category">
+                        <h4>📿 மந்திர ஜபம்</h4>
+                        <ul class="remedy-list">
+                            <li>"ஓம் கம் கணபதயே நமஃ" - 108 முறை தினமும்</li>
+                            <li>"ஓம் நமஃ சிவாயா" - மன அமைதிக்காக</li>
+                            <li>"ஓம் நமோ நாராயணாய" - குடும்ப நலனுக்காக</li>
+                            <li>"ஓம் ஸ்ரீ ராமாய நமஃ" - சகல நன்மைகளுக்காக</li>
+                            <li>காயத்ரி மந்திரம் - அறிவு வளர்ச்சிக்காக</li>
+                        </ul>
+                    </div>
+
+                    <div class="remedy-category">
+                        <h4>🌸 தானம் மற்றும் சேவை</h4>
+                        <ul class="remedy-list">
+                            <li>ஏழைகளுக்கு உணவு வழங்கவும்</li>
+                            <li>வெள்ளை பூக்கள் கோவிலில் சமர்ப்பிக்கவும்</li>
+                            <li>புத்தகங்கள் நூலகத்திற்கு தானம் செய்யவும்</li>
+                            <li>மருத்துவமனையில் இலவச சேவை</li>
+                            <li>விலங்குகளுக்கு உணவு கொடுக்கவும்</li>
+                        </ul>
+                    </div>
+
+                    <div class="remedy-category">
+                        <h4>🧘‍♀️ ஆன்மீக பயிற்சிகள்</h4>
+                        <ul class="remedy-list">
+                            <li>தினமும் 15 நிமிடம் தியானம்</li>
+                            <li>பிராணாயாமம் - சுவாச பயிற்சி</li>
+                            <li>சூர்ய நமஸ்காரம் - காலையில்</li>
+                            <li>வேத பாராயணம் - மாலையில்</li>
+                            <li>மௌன விரதம் - வாரத்தில் ஒரு நாள்</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+
+            // Add specific problem remedies if any
+            if (allRemedies.length > 0) {
+                html = `
+                    <div class="remedy-section">
+                        <div class="remedy-title">🎯 குறிப்பிட்ட சவால்களுக்கான பரிகாரங்கள்</div>
+                        <ul class="remedy-list">
+                            ${allRemedies.map(remedy => `<li>${remedy}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` + html;
+            }
+
+            return html;
+        }
+
+        function togglePlanetDetails(planetId) {
+            const header = document.querySelector(`[onclick="togglePlanetDetails('${planetId}')"]`);
+            const details = document.getElementById(`${planetId}-details`);
+
+            header.classList.toggle('expanded');
+            details.classList.toggle('show');
+        }
+
+        function filterMatrix(searchTerm) {
+            const rows = document.querySelectorAll('#combinations-table tbody tr');
+            const term = searchTerm.toLowerCase();
+
+            rows.forEach(row => {
+                const searchText = row.dataset.search.toLowerCase();
+                if (searchText.includes(term)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function filterByStatus(status) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const rows = document.querySelectorAll('#combinations-table tbody tr');
+
+            rows.forEach(row => {
+                if (status === 'all' || row.dataset.status === status) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Main prediction functions (keeping existing logic)
+        function getMarriagePrediction(planetData) {
+            let prediction = '';
+            let remedies = [];
+            let percentage = 0;
+
+            if (selectedGender === 'male') {
+                if (planetData.Jupiter && planetData.Venus) {
+                    percentage = calculatePercentage('Jupiter', 'Venus', planetData);
+                    const distance = calculateDistance(planetData.Jupiter.sign, planetData.Venus.sign);
+
+                    prediction = `<div class="calculation-breakdown">
+                        <div class="combination-strength">குரு-சுக்கிரன் கணக்கீடு:</div>
+                        <div>• நட்பு உறவு: ${getFriendshipStatus('Jupiter', 'Venus')}</div>
+                        <div>• வீட்டு இடைவெளி: ${distance}வது இடம்</div>
+                        <div>• சிறப்பு யோகங்கள்: ${checkParivartana('Jupiter', 'Venus', planetData) ? 'பரிவர்தனம் ✓' : ''} ${checkConjunction('Jupiter', 'Venus', planetData) ? 'சேர்க்கை ✓' : ''}</div>
+                    </div>`;
+
+                    if (percentage >= 70) {
+                        prediction += `✅ <strong>திருமணம் உறுதி!</strong><br>சுக்கிரன் குருவிலிருந்து ${distance}வது வீட்டில் - திருமணத்திற்கு சாதகம்.<br>`;
+
+                        if (checkConjunction('Jupiter', 'Venus', planetData)) {
+                            prediction += `🌟 குரு-சுக்கிரன் சேர்க்கை - விரைவில் அழகான திருமணம்.`;
+                        }
+                    } else if (percentage >= 40) {
+                        prediction += `⏰ <strong>திருமணம் தாமதம்</strong><br>சுக்கிரன் குருவிலிருந்து ${distance}வது வீட்டில் - சில சவால்கள் உள்ளன.<br>`;
+                        remedies.push('வெள்ளிக்கிழமை லட்சுமி கோவில் செல்லவும்');
+                        remedies.push('வெள்ளை பூக்கள் அர்ப்பணிக்கவும்');
+                    } else {
+                        prediction += `❌ <strong>திருமண சவால்கள்</strong><br>சுக்கிரன் குருவிலிருந்து ${distance}வது வீட்டில் - திருமணத்தில் கடினமான சூழ்நிலைகள்.<br>`;
+                        remedies.push('பிரம்மச்சர்யம் கடைப்பிடிக்கவும்');
+                        remedies.push('விஷ்ணு சகஸ்ர நாமம் ஓதவும்');
+                    }
+                }
+            } else {
+                // Female predictions
+                if (planetData.Venus && planetData.Mars) {
+                    percentage = calculatePercentage('Venus', 'Mars', planetData);
+                    const distance = calculateDistance(planetData.Venus.sign, planetData.Mars.sign);
+
+                    prediction = `<div class="calculation-breakdown">
+                        <div class="combination-strength">சுக்கிரன்-செவ்வாய் கணக்கீடு:</div>
+                        <div>• நட்பு உறவு: ${getFriendshipStatus('Venus', 'Mars')}</div>
+                        <div>• வீட்டு இடைவெளி: ${distance}வது இடம்</div>
+                        <div>• சிறப்பு யோகங்கள்: ${checkParivartana('Venus', 'Mars', planetData) ? 'பரிவர்தனம் ✓' : ''} ${checkConjunction('Venus', 'Mars', planetData) ? 'சேர்க்கை ✓' : ''}</div>
+                    </div>`;
+
+                    if (percentage >= 70) {
+                        prediction += `✅ <strong>திருமணம் உறுதி!</strong><br>செவ்வாய் சுக்கிரனிலிருந்து ${distance}வது வீட்டில் - திருமணத்திற்கு சாதகம்.<br>`;
+                    } else {
+                        prediction += `⏰ <strong>திருமண சவால்கள்</strong><br>செவ்வாய் சுக்கிரனிலிருந்து ${distance}வது வீட்டில் - திருமணத்தில் சில சிரமங்கள்.<br>`;
+                        remedies.push('செவ்வாய்க்கிழமை ஹனுமான் கோவில் செல்லவும்');
+                        remedies.push('சிவப்பு பூக்கள் அர்ப்பணிக்கவும்');
+                    }
+                }
+            }
+
+            return { prediction, remedies, percentage };
+        }
+
+        function getEducationPrediction(planetData) {
+            let prediction = '';
+            let remedies = [];
+            let percentage = 50;
+
+            if (planetData.Mercury) {
+                prediction = '<strong>கல்வித் துறை பகுப்பாய்வு:</strong><br>';
+
+                // Check Mercury combinations
+                const combinations = [];
+                planets.forEach(planet => {
+                    if (planet.english !== 'Mercury' && planetData[planet.english]) {
+                        if (checkConjunction('Mercury', planet.english, planetData)) {
+                            combinations.push(planet.english);
+                            percentage += 15;
+                        }
+                    }
+                });
+
+                if (combinations.length > 0) {
+                    combinations.forEach(planet => {
+                        switch(planet) {
+                            case 'Sun':
+                                prediction += `📚 புதன்-சூரியன்: அரசு துறை கல்வி, மருத்துவம், நிர்வாகம்<br>`;
+                                break;
+                            case 'Moon':
+                                prediction += `🎨 புதன்-சந்திரன்: உளவியல், கலை, இலக்கியம், மக்கள் தொடர்பு<br>`;
+                                break;
+                            case 'Mars':
+                                prediction += `⚔️ புதன்-செவ்வாய்: பொறியியல், விளையாட்டு, இராணுவம், அறுவை சிகிச்சை<br>`;
+                                break;
+                            case 'Jupiter':
+                                prediction += `🎓 புதன்-குரு: ஆசிரியர், வழக்கறிஞர், தத்துவம், உயர் கல்வி<br>`;
+                                break;
+                            case 'Venus':
+                                prediction += `🎭 புதன்-சுக்கிரன்: கலை, ஃபேஷன், வடிவமைப்பு, பொழுதுபோக்கு<br>`;
+                                break;
+                            case 'Saturn':
+                                prediction += `🔧 புதன்-சனி: தொழில்நுட்ப கல்வி, பொறியியல், கடின அறிவியல்<br>`;
+                                break;
+                            case 'Rahu':
+                                prediction += `💻 புதன்-ராகு: கணினி அறிவியல், வெளிநாட்டு கல்வி, ஆராய்ச்சி<br>`;
+                                break;
+                            case 'Ketu':
+                                prediction += `🏥 புதன்-கேது: மருத்துவத் துறை, ஆன்மீகம், ஆராய்ச்சி<br>`;
+                                break;
+                        }
+                    });
+                } else {
+                    prediction += `📖 புதன் தனித்து: பொதுக் கல்வி, தொடர்பு சார்ந்த துறைகள்<br>`;
+                }
+
+                // Education obstacles
+                if (planetData.Saturn && isBadPosition(calculateDistance(planetData.Mercury.sign, planetData.Saturn.sign))) {
+                    prediction += `⚠️ சனியின் மோசமான பார்வை கல்வியில் தாமதம் அல்லது தடைகளை ஏற்படுத்தலாம்.<br>`;
+                    percentage -= 20;
+                    remedies.push('காலை நேரத்தில் படிக்கவும்');
+                    remedies.push('சரஸ்வதி தேவியை வழிபடவும்');
+                }
+            }
+
+            return { prediction, remedies, percentage };
+        }
+
+        function getCareerPrediction(planetData) {
+            let prediction = '';
+            let remedies = [];
+            let percentage = 50;
+
+            if (planetData.Saturn) {
+                prediction = '<strong>தொழில் பகுப்பாய்வு:</strong><br>';
+
+                const combinations = [];
+                planets.forEach(planet => {
+                    if (planet.english !== 'Saturn' && planetData[planet.english]) {
+                        if (checkConjunction('Saturn', planet.english, planetData)) {
+                            combinations.push(planet.english);
+                            percentage += 12;
+                        }
+                    }
+                });
+
+                if (combinations.length > 0) {
+                    combinations.forEach(planet => {
+                        switch(planet) {
+                            case 'Sun':
+                                prediction += `👑 சனி-சூரியன்: அரசு பணி, நிர்வாகம், தலைமைப் பதவிகள்<br>`;
+                                break;
+                            case 'Moon':
+                                prediction += `🌊 சனி-சந்திரன்: பொது சேவை, சமூக பணி, உணவுத் துறை<br>`;
+                                break;
+                            case 'Mars':
+                                prediction += `🏭 சனி-செவ்வாய்: கனரக தொழில், கட்டுமானம், உற்பத்தி<br>`;
+                                break;
+                            case 'Mercury':
+                                prediction += `📊 சனி-புதன்: கணக்கியல், வணிகம், தொழில்நுட்ப எழுத்து<br>`;
+                                break;
+                            case 'Jupiter':
+                                prediction += `⚖️ சனி-குரு: வழக்கறிஞர், ஆசிரியர், ஆலோசகர், வங்கி<br>`;
+                                break;
+                            case 'Venus':
+                                prediction += `💄 சனி-சுக்கிரன்: அழகுசாதனத் துறை, கலை, ஆடம்பர பொருட்கள்<br>`;
+                                break;
+                            case 'Rahu':
+                                prediction += `🌐 சனி-ராகு: வெளிநாட்டு நிறுவனங்கள், தொழில்நுட்பம், புதுமை<br>`;
+                                break;
+                            case 'Ketu':
+                                prediction += `🔬 சனி-கேது: ஆராய்ச்சி, ஆன்மீகம், துப்பறியும் பணி<br>`;
+                                break;
+                        }
+                    });
+                } else {
+                    prediction += `⚒️ சனி தனித்து: பாரம்பரிய வேலைகள், சேவைத் துறை, வழக்கமான பணி<br>`;
+                }
+            }
+
+            return { prediction, remedies, percentage };
+        }
+
+        function getChildrenPrediction(planetData) {
+            let prediction = '';
+            let remedies = [];
+            let percentage = 60;
+
+            if (planetData.Jupiter) {
+                prediction = '<strong>சந்தான பேறு:</strong><br>';
+
+                if (planetData.Jupiter.retrograde) {
+                    prediction += `⏰ வக்ர குரு - சந்தான பேறு தாமதமாம் ஆனால் ஞானமுள்ள குழந்தைகள்.<br>`;
+                    percentage += 10;
+                }
+
+                if (planetData.Ketu) {
+                    const distance = calculateDistance(planetData.Jupiter.sign, planetData.Ketu.sign);
+                    if (distance === 7) {
+                        prediction += `🎯 குரு-கேது எதிர் நிலை: ஆன்மீக குழந்தைகள், சிறப்பு திறமைகள்.<br>`;
+                        percentage += 15;
+                    }
+                }
+
+                if (planetData.Moon && checkConjunction('Jupiter', 'Moon', planetData)) {
+                    prediction += `👶 குரு-சந்திரன் சேர்க்கை: பல குழந்தைகள், பாசமுள்ள சுபாவம்.<br>`;
+                    percentage += 20;
+                }
+
+                if (planetData.Saturn && isBadPosition(calculateDistance(planetData.Jupiter.sign, planetData.Saturn.sign))) {
+                    prediction += `⚠️ சனியின் பாதிப்பு சந்தான பேற்றில் தாமதத்தை ஏற்படுத்தலாம்.<br>`;
+                    percentage -= 15;
+                    remedies.push('வியாழக்கிழமை கோவில் செல்லவும்');
+                    remedies.push('குழந்தைகளுக்கு மஞ்சள் உணவு கொடுக்கவும்');
+                }
+            }
+
+            return { prediction, remedies, percentage };
+        }
+
+        function calculateBNN() {
+            const planetData = getPlanetData();
+
+            if (Object.keys(planetData).length < 3) {
+                alert('குறைந்தபட்சம் 3 கிரக நிலைகளை உள்ளிடவும்.');
+                return;
+            }
+
+            currentPlanetData = planetData;
+
+            // Generate Main Predictions Tab
+            generateMainPredictions(planetData);
+
+            // Generate Complete Matrix Tab
+            document.getElementById('matrix-content').innerHTML = generateCompleteMatrix(planetData);
+
+            // Generate Individual Analysis Tab
+            document.getElementById('individual-content').innerHTML = generateIndividualAnalysis(planetData);
+
+            // Generate Remedies Tab (will be populated after main predictions)
+        }
+
+        function generateMainPredictions(planetData) {
+            let resultsHTML = '';
+
+            // Marriage Prediction
+            const marriageResult = getMarriagePrediction(planetData);
+            if (marriageResult.prediction) {
+                const percentageClass = getPercentageClass(marriageResult.percentage);
+                resultsHTML += `
+                    <div class="prediction-card">
+                        <div class="prediction-title">
+                            💍 திருமண கணிப்பு 
+                            <span class="percentage-indicator ${percentageClass}">${marriageResult.percentage}%</span>
+                        </div>
+                        <div class="prediction-content">${marriageResult.prediction}</div>
+                    </div>
+                `;
+            }
+
+            // Education Prediction
+            const educationResult = getEducationPrediction(planetData);
+            if (educationResult.prediction) {
+                const percentageClass = getPercentageClass(educationResult.percentage);
+                resultsHTML += `
+                    <div class="prediction-card">
+                        <div class="prediction-title">
+                            📚 கல்வி கணிப்பு 
+                            <span class="percentage-indicator ${percentageClass}">${educationResult.percentage}%</span>
+                        </div>
+                        <div class="prediction-content">${educationResult.prediction}</div>
+                    </div>
+                `;
+            }
+
+            // Career Prediction
+            const careerResult = getCareerPrediction(planetData);
+            if (careerResult.prediction) {
+                const percentageClass = getPercentageClass(careerResult.percentage);
+                resultsHTML += `
+                    <div class="prediction-card">
+                        <div class="prediction-title">
+                            💼 தொழில் கணிப்பு 
+                            <span class="percentage-indicator ${percentageClass}">${careerResult.percentage}%</span>
+                        </div>
+                        <div class="prediction-content">${careerResult.prediction}</div>
+                    </div>
+                `;
+            }
+
+            // Children Prediction
+            const childrenResult = getChildrenPrediction(planetData);
+            if (childrenResult.prediction) {
+                const percentageClass = getPercentageClass(childrenResult.percentage);
+                resultsHTML += `
+                    <div class="prediction-card">
+                        <div class="prediction-title">
+                            👶 சந்தான கணிப்பு 
+                            <span class="percentage-indicator ${percentageClass}">${childrenResult.percentage}%</span>
+                        </div>
+                        <div class="prediction-content">${childrenResult.prediction}</div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('main-tab').innerHTML = resultsHTML;
+
+            // Generate comprehensive remedies
+            const remediesHTML = generateComprehensiveRemedies(planetData, marriageResult, educationResult, careerResult, childrenResult);
+            document.getElementById('remedies-content').innerHTML = remediesHTML;
+        }
+    </script>
+</body>
 </html>
